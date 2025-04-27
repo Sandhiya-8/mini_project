@@ -58,7 +58,7 @@ const userRoles=["admin","adult","child","house-help"]
 // Route to fetch resources
 app.get("/api/resources", (req, res) => {
   try {
-    console.log("hello i am giri");
+    
     res.json(resources); // Send resources as JSON response
     } catch (error) {
         console.error("Error fetching resources:", error);
@@ -170,6 +170,7 @@ app.get("/getAllPolicies", async (req, res) => {
     const policies = await Promise.all(
       policyIds.map(async (id) => {
         const policy = await contract.methods.getPolicy(id).call();
+        console.log(policy[3].contextConstraints);
         return {
           policy_id: policy[0],
           description: policy[1],
@@ -194,6 +195,7 @@ app.get("/getAllPolicies", async (req, res) => {
         };
       })
     );
+    console.log(policies);
     res.json(policies);
   } catch (error) {
     console.error("Error retrieving policies:", error);
